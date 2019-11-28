@@ -7,13 +7,19 @@ use std::process;
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    let config = Config::new(&args);
+    let config = Config::new(&args, false);
     // run(config);
-    if let Err(e) = run(config) {
-    println!("Application error: {}", e);
-
-    process::exit(1);
-}
+    if let Err(e) = search::run(config) {
+        println!("Application error: {}", e);
+        process::exit(1);
+    }
+    println!("End of insensitive search!");
+    let config2 = Config::new(&args, true);
+    // config2.sensitive = true;
+    if let Err(e) = search::run(config2) {
+        println!("Application error: {}", e);
+        process::exit(1);
+    }
     // --snip--
 }
 
